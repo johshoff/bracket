@@ -59,7 +59,7 @@ while any(len(b.pending_players) > 1 for b in brackets):
 # hardcoded for two brackets, but could be generalized
 a = brackets[0].pending_players.pop()
 b = brackets[1].pending_players.pop()
-add_match(a, b, bracket)
+add_match(a, b, brackets[0])
 
 def print_dot_graph(matches):
     print('digraph {')
