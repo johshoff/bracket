@@ -6,6 +6,7 @@ from __future__ import annotations
 import zlib
 from dataclasses import dataclass
 from itertools import zip_longest
+from collections import defaultdict
 
 @dataclass
 class Bracket:
@@ -26,12 +27,13 @@ class Match:
 
 brackets = [
     # normal bracket
-    Bracket([Player() for _ in range(8)], [], 'black'),
+    Bracket([Player() for _ in range(16)], [], 'black'),
 
     # losers brackets
     Bracket([], [], 'red'),
     Bracket([], [], 'yellow'),
 ]
+group_brackets = True
 
 matches = []
 
@@ -74,8 +76,20 @@ while True:
 
 def print_dot_graph(matches):
     print('digraph {')
+    if group_brackets:
+        bracket_graphs = defaultdict(list)
+        for m in matches:
+            bracket_graphs[id(m.bracket)].append(m)
+        for bracket_id, bracket_matches in bracket_graphs.items():
+            # the name "cluster" is significant
+            print('  subgraph cluster_%s {' % bracket_id)
+            print('    color=none')
+            for m in bracket_matches:
+                print('    %s [color=%s,label=""]' % (id(m), m.bracket.color))
+            print('  }')
     for m in matches:
-        print('  %s [color=%s,label=""]' % (id(m), m.bracket.color))
+        if not group_brackets:
+            print('  %s [color=%s,label=""]' % (id(m), m.bracket.color))
         for player in [m.a, m.b]:
             if player.last_match is not None:
                 color = 'black' if player.is_winner else 'red'

@@ -7,9 +7,13 @@ It produces a Graphviz dot file that will produce an image like below. The
 black arrows show winners, the red arrows show losers. The black circles are
 the normal bracket and the red ones are the loser's bracket.
 
-![example](example.png)
+![example](examples/example.png)
 
 You can also have an arbitrary number of loser's brackets. Here's three, with
 yellow showing the twice-loser's bracket.
 
-![three brackets](three-brackets.png)
+![three brackets](examples/three-brackets.png)
+
+It is also possible to group brackets together visually with `group_brackets`.
+
+![grouping](examples/grouping.png)
